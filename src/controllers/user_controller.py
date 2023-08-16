@@ -2,6 +2,7 @@ from fastapi import APIRouter
 from src.models.user import User, CreateUser
 from database.schemas.user_schema import UserSchema
 from database.database import users_collection
+from typing import List
 
 router = APIRouter()
 schema = UserSchema()
@@ -14,7 +15,7 @@ async def create_user(user: CreateUser):
 async def get_user(user_id: str):
     return schema.get_user(user_id)
 
-@router.get("/users/", response_model=list[User])
+@router.get("/users/", response_model=List[User])
 async def get_users():
     users = users_collection.find()
     return schema.users_serializer(users)
