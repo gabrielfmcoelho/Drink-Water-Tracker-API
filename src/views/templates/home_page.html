@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home_page.css') }}">
+  <title>DWT Home</title>
+</head>
+
+<body>
+  <div class="water-background"></div>
+  <div class="center-content">
+    <h1>Drink Water Tracker</h1>
+    <div class="container">
+      <h2>Register Person</h2>
+      <form id="registerForm">
+        <div class="input-group">
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div class="input-group">
+          <label for="weight">Weight (kg):</label>
+          <input type="number" id="weight" name="weight" step="1" required>
+        </div>
+        <button type="submit" id="submitBtn">Register</button>
+      </form>
+    </div>
+    <hr class="break"/>
+    <div class="container">
+      <h2>Find Person</h2>
+      <form id="findForm">
+        <div class="input-group">
+          <label for="ID">ID number:</label>
+          <input type="text" id="ID" name="ID" required>
+        </div>
+        <button type="submit" id="submitBtn">Find</button>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const name = document.getElementById('name').value;
+        const weight = parseInt(document.getElementById('weight').value);
+
+        const formData = {
+            name: name,
+            weight: weight
+        };
+
+        fetch('/user/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(formData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Handle response data
+            console.log(data.id);
+            window.location.href = "/app/" + data.id + "/tracker/";
+            // Optionally, redirect or show a success message
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Could not register user, please try again.");
+        });
+    });
+  </script>
+  <script>
+    document.getElementById('findForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const id = document.getElementById('ID').value;
+
+        const formData = {
+            id: id,
+        };
+
+        fetch('/user/'+id, {
+            method: 'GET',
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data); // Handle response data
+            window.location.href = "/app/" + id + "/tracker/";
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("User not found");
+        });
+    });
+  </script>
+</body>
+</html>
+

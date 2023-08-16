@@ -1,0 +1,64 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='history.css') }}">
+  <title>DWT {{ user.id }} History</title>
+</head>
+<body>
+  <div class="water-background"></div>
+  <div class="center-content">
+    <h1>History</h1>
+    <h3>{{ user.name }}</h3>
+    <p>ID: {{ user.id }}</p>
+    <div class="history-container">
+      {% for entry in entries %}
+        <div class="entry-container">
+          <h2>{{ entry.date }}</h2>
+          <table>
+              <tr>
+                <th>goal:</th>
+                <td>{{ entry.goal }}ml</td>
+              </tr>
+              <tr>
+                <th>missing:</th>
+                <td>{{ entry.missing }}ml</td>
+              </tr>
+              <tr>
+                <th>consumed:</th>
+                <td>{{ entry.consumed }}ml</td>
+              </tr>
+              <tr>
+                <th>goal percent:</th>
+                <td>{{ entry.goal_percent }}%</td>
+              </tr>
+                <th>goal has been reached ?</th>
+                <td>{{ "Yes" if entry.goal_reached else "No" }}</td>
+              </tr>
+          </table>
+          <button id="editConsume{{ entry.date }}">Edit consume</button>
+        </div>
+        <hr class="break"/>
+      {% endfor %}
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    // Function to handle button click
+    function navigateToTracker(userId, entryDate) {
+      var url = `/app/${userId}/tracker/${entryDate}`;
+      window.location.href = url;
+    }
+  
+    // Attach click event handlers to the buttons
+    var editButtons = document.querySelectorAll('[id^="editConsume"]');
+    editButtons.forEach(function(button) {
+      var entryDate = button.id.replace('editConsume', '');
+      button.addEventListener('click', function() {
+        navigateToTracker('{{ user.id }}', entryDate);
+      });
+    });
+  </script>  
+</body> 
+</html>

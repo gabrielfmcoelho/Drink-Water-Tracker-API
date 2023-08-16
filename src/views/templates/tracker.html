@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='tracker.css') }}">
+  <title>DWT {{ user.id }} Tracker</title>
+</head>
+<body>
+  <div class="water-background"></div>
+  <div class="center-content">
+    <h1>Tracker</h1>
+    <h3>{{ user.name }}</h3>
+    <p>ID: {{ user.id }}</p>
+    <div>
+      <div class="container">
+        <h2>Today's {{ date }} Water Intake</h2>
+        <form id='tracker_form'>
+          <fieldset>
+            <legend>Register consume</legend>
+            <div class="fieldset-content">
+              <div>
+                <input type="radio" id="0" name="cupsize" value="250">
+                <label for="0">Small water cup 250ml</label>
+              </div>
+              <div>
+                <input type="radio" id="1" name="cupsize" value="350">
+                <label for="1">Medium water cup 350ml</label>
+              </div>
+              <div>
+                <input type="radio" id="2" name="cupsize" value="500">
+                <label for="2">Large water cup 500ml</label>
+              </div>
+            </div>
+          </fieldset>
+          <button type="submit">Consume</button>
+        </form>
+      </div>
+      <hr class="break"/>
+      <div class="container">
+        <h2>Today's History</h2>
+        <p>Here is your today water intake</p>
+        <table>
+            <tr>
+              <th>today's goal:</th>
+              <td>{{ entry.goal }}ml</td>
+            </tr>
+            <tr>
+              <th>missing:</th>
+              <td>{{ entry.missing }}ml</td>
+            </tr>
+            <tr>
+              <th>consumed:</th>
+              <td>{{ entry.consumed }}ml</td>
+            </tr>
+            <tr>
+              <th>goal percent:</th>
+              <td>{{ entry.goal_percent }}%</td>
+            </tr>
+              <th>goal has been reached ?</th>
+              <td>{{ "Yes" if entry.goal_reached else "No" }}</td>
+            </tr>
+        </table>
+        <button id="seeHistory">See full history</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    document.getElementById('tracker_form').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const selectedCupSize = document.querySelector('input[name="cupsize"]:checked');
+      if (!selectedCupSize) {
+          alert("Please select a cup size");
+          return;
+      }
+      else {
+          var cupsize = parseInt(selectedCupSize.value);
+      }
+
+      const formData = {
+          cupsize: cupsize,
+      };
+
+      fetch('/user/{{ user.id }}/tracker/{{ entry.date }}', {
+          method: 'PUT',
+          headers: {
+              'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(formData)
+      })
+      .then(response => response.json())
+      .then(data => {
+          console.log(data); // Handle response data
+          window.location.href = "/app/{{ user.id }}/tracker/{{ entry.date }}";
+          // Optionally, redirect or show a success message
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          // Handle error, show an error message, etc.
+      });
+  });
+  </script>
+  <script>
+    $(document).ready(function() {
+      $('#seeHistory').click(function(event) {
+        event.preventDefault();
+        $.ajax({
+          url: '/app/{{ user.id }}/history',
+          type: 'GET',
+          success: function(response) {
+            console.log(response);
+            window.location.href = '/app/{{ user.id }}/history';
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>

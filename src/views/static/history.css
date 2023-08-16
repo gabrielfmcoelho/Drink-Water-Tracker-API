@@ -1,0 +1,149 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    overflow-y: scroll;
+    text-align: center;
+  }
+  
+  .water-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #0099FF, #00CCFF, #00FFFF);
+    animation: waterAnimation 10s linear infinite alternate;
+    z-index: -1; /* Place behind other content */
+  }
+  
+  @keyframes waterAnimation {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 100% 100%;
+    }
+  }
+  
+    .break{
+      max-width: 500px;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .history-container {
+      max-height: calc(100vh - 300px); /* Adjust as needed */
+      overflow-y: auto;
+      margin-top: 20px;
+    }
+    
+    .entry-container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+  
+    .center-content{
+      margin-top: 8%; /* Half of the parent's height */
+      transform: translateY(-8%);
+    }
+    
+    h1 {
+      font-size: 4em;
+      text-align: center;
+      color: #fff;
+      margin-top: 20px;
+      margin-bottom: 5px;
+    }
+    
+    h2 {
+      text-align: center;
+      color: #555;
+    }
+  
+    h3{
+      font-size: 1.5em;
+      text-align: center;
+      color: #555;
+      margin-top: 5px;
+      margin-bottom: 5px;
+    }
+  
+    p {
+      text-align: center;
+      color: #555;
+    }
+    
+    form {
+      margin-top: 20px;
+    }
+    
+    legend {
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+      text-align: center;
+    }
+  
+    fieldset {
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 10px;
+    }
+  
+    .fieldset-content{
+      display: flex;
+      flex-direction: column;
+      padding-left: 25%;
+      align-items: baseline;
+    }
+    
+    label {
+      margin-left: 10px;
+    }
+    
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    th, td {
+      padding: 10px;
+      text-align: center;
+      border-bottom: 1px solid #ddd;
+    }
+    
+    th {
+      background-color: #f5f5f5;
+    }
+    
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    
+    button:hover {
+      background-color: #0056b3;
+    }
