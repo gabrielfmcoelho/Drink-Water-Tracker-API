@@ -1,0 +1,365 @@
+openapi: 3.0.2
+info:
+  title: Drink Water Tracker API
+  version: '1.0'
+  description: A simple API with MongoDB to track your daily water intake.
+  contact:
+    name: Gabriel Coelho
+    url: gabrielfmcoelho.github.io
+    email: gabrielcoelho09gc@gmail.com
+paths:
+  /:
+    get:
+      summary: Hello World
+      operationId: hello_world__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema: {}
+  /user/:
+    post:
+      tags:
+      - user
+      summary: Create User
+      description: "Summary: Create a new user in database\n\nArgs:\n    user (CreateUser):\
+        \ User data {name: str, weight: int}\n\nReturns:\n    User: User data with\
+        \ id"
+      operationId: create_user_user__post
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUser'
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user/{user_id}/:
+    get:
+      tags:
+      - user
+      summary: Get User
+      description: "Summary: Get user data by id in database and return user data\n\
+        \nArgs:\n    user_id (str): User id\n\nReturns:\n    User: User data with\
+        \ id"
+      operationId: get_user_user__user_id___get
+      parameters:
+      - required: true
+        schema:
+          title: User Id
+          type: string
+        name: user_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /users/:
+    get:
+      tags:
+      - user
+      summary: List Users
+      description: "Summary: Get all users data in database and return users data\n\
+        \nReturns:\n    List[User]: List of users data with id"
+      operationId: list_users_users__get
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response List Users Users  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+  /user/{user_id}/tracker/:
+    get:
+      tags:
+      - tracker
+      summary: Today Tracker
+      operationId: today_tracker_user__user_id__tracker__get
+      parameters:
+      - required: true
+        schema:
+          title: User Id
+          type: string
+        name: user_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterTracker'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user/{user_id}/tracker/{tracker_date}/:
+    get:
+      tags:
+      - tracker
+      summary: Get Tracker
+      description: "_summary_\n\nArgs:\n    user_id (str): _description_\n    tracker_date\
+        \ (date): _description_\n\nReturns:\n    _type_: _description_"
+      operationId: get_tracker_user__user_id__tracker__tracker_date___get
+      parameters:
+      - required: true
+        schema:
+          title: User Id
+          type: string
+        name: user_id
+        in: path
+      - required: true
+        schema:
+          title: Tracker Date
+          type: string
+          format: date
+        name: tracker_date
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterTracker'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    put:
+      tags:
+      - tracker
+      summary: Update Tracker Consume
+      description: "_summary_\n\nArgs:\n    user_id (str): _description_\n    tracker_date\
+        \ (date): _description_\n    update (dict): _description_\n\nReturns:\n  \
+        \  _type_: _description_"
+      operationId: update_tracker_consume_user__user_id__tracker__tracker_date___put
+      parameters:
+      - required: true
+        schema:
+          title: User Id
+          type: string
+        name: user_id
+        in: path
+      - required: true
+        schema:
+          title: Tracker Date
+          type: string
+          format: date
+        name: tracker_date
+        in: path
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: Update
+              type: object
+        required: true
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterTracker'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+    post:
+      tags:
+      - tracker
+      summary: Create Specific Tracker
+      description: "_summary_\n\nArgs:\n    user_id (str): _description_\n    tracker_date\
+        \ (date): _description_\n\nReturns:\n    _type_: _description_"
+      operationId: create_specific_tracker_user__user_id__tracker__tracker_date___post
+      parameters:
+      - required: true
+        schema:
+          title: User Id
+          type: string
+        name: user_id
+        in: path
+      - required: true
+        schema:
+          title: Tracker Date
+          type: string
+          format: date
+        name: tracker_date
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WaterTracker'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+  /user/{user_id}/history/:
+    get:
+      tags:
+      - tracker
+      summary: List Trackers
+      description: "_summary_\n\nArgs:\n    user_id (str): _description_\n\nReturns:\n\
+        \    _type_: _description_"
+      operationId: list_trackers_user__user_id__history__get
+      parameters:
+      - required: true
+        schema:
+          title: User Id
+          type: string
+        name: user_id
+        in: path
+      responses:
+        '200':
+          description: Successful Response
+          content:
+            application/json:
+              schema:
+                title: Response List Trackers User  User Id  History  Get
+                type: array
+                items:
+                  $ref: '#/components/schemas/WaterTracker'
+        '422':
+          description: Validation Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+components:
+  schemas:
+    CreateUser:
+      title: CreateUser
+      required:
+      - name
+      - weight
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        weight:
+          title: Weight
+          type: integer
+    HTTPValidationError:
+      title: HTTPValidationError
+      type: object
+      properties:
+        detail:
+          title: Detail
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationError'
+    User:
+      title: User
+      required:
+      - name
+      - weight
+      type: object
+      properties:
+        name:
+          title: Name
+          type: string
+        weight:
+          title: Weight
+          type: integer
+        id:
+          title: Id
+          type: string
+    ValidationError:
+      title: ValidationError
+      required:
+      - loc
+      - msg
+      - type
+      type: object
+      properties:
+        loc:
+          title: Location
+          type: array
+          items:
+            anyOf:
+            - type: string
+            - type: integer
+        msg:
+          title: Message
+          type: string
+        type:
+          title: Error Type
+          type: string
+    WaterTracker:
+      title: WaterTracker
+      required:
+      - id_owner
+      - weight_at_time
+      - date
+      - goal
+      - missing
+      - consumed
+      - goal_percent
+      - goal_reached
+      type: object
+      properties:
+        id_owner:
+          title: Id Owner
+          type: string
+        weight_at_time:
+          title: Weight At Time
+          type: integer
+        date:
+          title: Date
+          type: string
+          format: date
+        goal:
+          title: Goal
+          type: integer
+        missing:
+          title: Missing
+          type: integer
+        consumed:
+          title: Consumed
+          type: integer
+        goal_percent:
+          title: Goal Percent
+          type: number
+        goal_reached:
+          title: Goal Reached
+          type: boolean
+        id:
+          title: Id
+          type: string

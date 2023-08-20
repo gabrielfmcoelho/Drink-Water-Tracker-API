@@ -36,8 +36,7 @@ def get_tracker_from_api(user_id, tracker_date=None):
 def get_history_from_api(user_id):
     try:
         history_response = requests.get(f"http://127.0.0.1:8000/user/{user_id}/history/")
-        history_data = history_response.json()
-        return history_data
+        return history_response.json()
     except Exception as e:
         print(e)
         return []

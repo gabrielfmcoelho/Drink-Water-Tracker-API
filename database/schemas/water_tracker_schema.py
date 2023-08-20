@@ -17,13 +17,15 @@ class WaterTrackerSchema():
             return self.tracker_serializer(last_tracker)
         return None
     
-    @staticmethod
-    def create_tracker(user_id: str, tracker_date: date) -> WaterTracker:
+    def create_tracker(self, user_id: str, tracker_date: date) -> WaterTracker:
         user = users_collection.find_one({"_id": ObjectId(user_id)})
         if user is None:
             raise HTTPException(status_code=404, detail="User not found")
+        tracker_on_date = self.get_tracker(user_id, tracker_date, skip_404=True)
+        if tracker_on_date is not None:
+            raise HTTPException(status_code=409, detail="Tracker already exists")
         if tracker_date > datetime.now().date():
-            raise HTTPException(status_code=400, detail="Invalid date")
+            raise HTTPException(status_code=409, detail="Invalid date")
         to_drink = user["weight"] * 35
         tracker = {
             "id_owner": user_id,
@@ -47,9 +49,11 @@ class WaterTrackerSchema():
             return self.create_tracker(user_id, today)
         return last_tracker
     
-    def get_tracker(self, user_id: str, tracker_date: date) -> WaterTracker:
+    def get_tracker(self, user_id: str, tracker_date: date, skip_404: bool = False) -> WaterTracker:
         tracker = trackers_collection.find_one({"id_owner": user_id, "date": tracker_date.strftime("%Y-%m-%d")})
         if tracker is None:
+            if skip_404:
+                return None
             raise HTTPException(status_code=404, detail="Tracker not found")
         return self.tracker_serializer(tracker)
 
@@ -57,7 +61,7 @@ class WaterTrackerSchema():
     def tracker_serializer(tracker) -> WaterTracker:
         tracker_id = tracker["_id"]
         return WaterTracker(
-            id=tracker_id,
+            id=str(tracker_id),
             id_owner=str(tracker["id_owner"]),
             weight_at_time=tracker["weight_at_time"],
             date=tracker["date"],
@@ -79,11 +83,10 @@ class WaterTrackerSchema():
         missing = tracker.missing - quantity
         if missing <= 0:
             missing = 0
-        goal_percent = round((consumed / tracker.goal) * 100, 2)
-        if missing <= 0:
             goal_reached = True
         else:
             goal_reached = False
+        goal_percent = round((consumed / tracker.goal) * 100, 2)     
         tracker_data = {
             "id_owner": tracker.id_owner,
             "weight_at_time": tracker.weight_at_time,

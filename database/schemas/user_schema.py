@@ -7,7 +7,7 @@ from typing import List
 class UserSchema():
     
     @staticmethod
-    def user_serializer(self, user) -> User:
+    def user_serializer(user) -> User:
         user_id = str(user["_id"])
         return User(id=user_id, 
                     name=user["name"], 
@@ -17,7 +17,7 @@ class UserSchema():
         return [self.user_serializer(user) for user in users]
     
     @staticmethod
-    def create_user(self, user: CreateUser) -> User:
+    def create_user(user: CreateUser) -> User:
         user_data = {
             "name": user.name,
             "weight": user.weight,
