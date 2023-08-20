@@ -40,7 +40,7 @@ class WaterTrackerSchema():
         tracker_id = trackers_collection.insert_one(tracker).inserted_id
         tracker_with_id = tracker.copy()
         tracker_with_id["id"] = str(tracker_id)
-        return WaterTracker(**tracker_with_id)
+        return self.tracker_serializer(tracker_with_id)
     
     def today_tracker(self, user_id: str) -> WaterTracker:
         last_tracker = self.verify_last_tracker(user_id)
@@ -99,8 +99,8 @@ class WaterTrackerSchema():
             "id" : tracker.id
         }
         trackers_collection.update_one({"_id": ObjectId(tracker.id)}, {"$set": tracker_data})
-        return tracker_data        
-            
+        return tracker_data
+        
     def get_trackers(self, user_id: str) -> List[WaterTracker]:
         trackers = trackers_collection.find({"id_owner": user_id})
         if trackers is None:

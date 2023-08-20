@@ -13,8 +13,7 @@ page_blueprint = Blueprint('page', __name__)
 def get_user_from_api(user_id):
     try:
         user_response = requests.get(f"http://127.0.0.1:8000/user/{user_id}/")
-        user_data = user_response.json()
-        return user_schema.user_serializer(user_data)
+        return user_response.json()
     except Exception as e:
         print(e)
         return None
@@ -26,9 +25,7 @@ def get_tracker_from_api(user_id, tracker_date=None):
             tracker_response = requests.get(f"http://127.0.0.1:8000/user/{user_id}/tracker/")
         else:
             tracker_response = requests.get(f"http://127.0.0.1:8000/user/{user_id}/tracker/{tracker_date}/")
-        
-        tracker_data = tracker_response.json()
-        return water_tracker_schema.tracker_serializer(tracker_data)
+        return tracker_response.json()
     except Exception as e:
         print(e)
         return None
