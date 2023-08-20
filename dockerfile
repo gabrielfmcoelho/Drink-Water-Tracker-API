@@ -1,13 +1,13 @@
 FROM python:3.10
 
-WORKDIR /app
+WORKDIR /aplication
 
-COPY requirements.txt /app/
+COPY requirements.txt /aplication/
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . /app/
+COPY . /aplication/
 
-EXPOSE 8000
+EXPOSE 8001
 
-CMD ["uvicorn", "app:api"]
+CMD ["uvicorn", "app:api", "--reload", "--port", "8001", "--host", "0.0.0.0"]
