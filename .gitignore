@@ -9,8 +9,6 @@ instance/*
 
 #General Configuration
 
-.env
-
 ### Flask.Python Stack ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
