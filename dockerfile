@@ -10,6 +10,6 @@ COPY . /aplication/
 
 ENV MONGODB_URI="45.79.205.185:27017"
 
-EXPOSE 8001
+EXPOSE 8000
 
-CMD ["uvicorn", "app:api", "--reload", "--port", "8001", "--host", "0.0.0.0"]
+CMD ["uvicorn", "app:api", "--port", "8000", "--host", "0.0.0.0"]

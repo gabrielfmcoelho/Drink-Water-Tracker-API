@@ -19,6 +19,12 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       
+      - name: Set up environment
+      run: |
+        echo "MONGODB_URI=$MONGODB_URI" >> .env
+      env:
+        MONGODB_URI: ${{ secrets.MONGODB_URI }}
+      
       - name: Extract metadata (tags, labels) for Docker
         id: meta
         uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38

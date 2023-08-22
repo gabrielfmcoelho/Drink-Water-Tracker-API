@@ -1,5 +1,6 @@
 import os
+from dotenv import load_dotenv
 
-MONGODB_URI = "45.79.205.185:27017"
+load_dotenv()
 
-#MONGODB_URI = os.environ.get("MONGODB_URI")
+MONGODB_URI = os.getenv("MONGODB_URI")

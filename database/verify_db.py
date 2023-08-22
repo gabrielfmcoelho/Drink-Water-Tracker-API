@@ -1,9 +1,15 @@
 
 from pymongo import MongoClient
+from dotenv import load_dotenv
+import os
 
-def verify_db_connection(URI = "45.79.205.185:27017"):
+load_dotenv()
+
+MONGODB_URI = os.getenv("MONGODB_URI")
+
+def verify_db_connection(uri):
     try:
-        client_test = MongoClient(URI)
+        client_test = MongoClient(uri)
         server_info = client_test.server_info()
         print("Connected to MongoDB")
         print(f"Server version: {server_info['version']}")
@@ -19,5 +25,5 @@ def verify_db_connection(URI = "45.79.205.185:27017"):
     return status
 
 if __name__ == "__main__":
-    verify_db_connection()
+    verify_db_connection(MONGODB_URI)
     exit(1)
