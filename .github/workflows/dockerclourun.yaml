@@ -5,7 +5,7 @@ on:
     branches: [ "master" ]
 
 env:
-  PROJECT_ID: personal-portfolio-396715 # TODO: update Google Cloud project id
+  PROJECT_ID: personal-portfolio # TODO: update Google Cloud project id
   GAR_LOCATION: southamerica-east1 # TODO: update Artifact Registry location
   SERVICE: drink-water-tracker-api # TODO: update Cloud Run service name
   REGION: southamerica-east1 # TODO: update Cloud Run service region
