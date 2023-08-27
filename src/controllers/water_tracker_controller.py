@@ -16,7 +16,7 @@ async def get_tracker(user_id: str, tracker_date: date):
     """_summary_
 
     Args:
-        user_id (str): _description_
+        user_id (str): _descrpiption_
         tracker_date (date): _description_
 
     Returns:

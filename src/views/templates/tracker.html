@@ -84,7 +84,7 @@
           cupsize: cupsize,
       };
 
-      fetch('/user/{{ user.id }}/tracker/{{ entry.date }}', {
+      fetch('http://127.0.0.1:8000/user/{{ user.id }}/tracker/{{ entry.date }}', {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
@@ -94,7 +94,7 @@
       .then(response => response.json())
       .then(data => {
           console.log(data); // Handle response data
-          window.location.href = "/app/{{ user.id }}/tracker/{{ entry.date }}";
+          window.location.href = "http://127.0.0.1:8000/app/{{ user.id }}/tracker/{{ entry.date }}";
           // Optionally, redirect or show a success message
       })
       .catch(error => {
@@ -108,11 +108,11 @@
       $('#seeHistory').click(function(event) {
         event.preventDefault();
         $.ajax({
-          url: '/app/{{ user.id }}/history',
+          url: 'http://127.0.0.1:8000/app/{{ user.id }}/history',
           type: 'GET',
           success: function(response) {
             console.log(response);
-            window.location.href = '/app/{{ user.id }}/history';
+            window.location.href = 'http://127.0.0.1:8000/app/{{ user.id }}/history';
           },
           error: function(error) {
             console.log(error);
