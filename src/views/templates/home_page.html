@@ -51,7 +51,7 @@
             weight: weight
         };
 
-        fetch('/user/', {
+        fetch('http://127.0.0.1:8000/user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@
         .then(data => {
             console.log(data); // Handle response data
             console.log(data.id);
-            window.location.href = "/app/" + data.id + "/tracker/";
+            window.location.href = "http://127.0.0.1:8000/app/" + data.id + "/tracker/";
             // Optionally, redirect or show a success message
         })
         .catch(error => {
@@ -81,13 +81,13 @@
             id: id,
         };
 
-        fetch('/user/'+id, {
+        fetch('http://127.0.0.1:8000/user/'+id, {
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             console.log(data); // Handle response data
-            window.location.href = "/app/" + id + "/tracker/";
+            window.location.href = "http://127.0.0.1:8000/app/" + id + "/tracker/";
         })
         .catch(error => {
             console.error('Error:', error);
