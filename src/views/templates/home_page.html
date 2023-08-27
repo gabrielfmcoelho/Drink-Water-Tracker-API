@@ -76,8 +76,9 @@
         event.preventDefault();
 
         const id = document.getElementById('ID').value;
+        console.log(id);
 
-        fetch('http://127.0.0.1:8000/user/'+id+'/', {
+        fetch("/user/"+id+"/", {
             method: 'GET',
         })
         .then(response => response.json())
@@ -86,6 +87,7 @@
             window.location.href = "http://127.0.0.1:8000/app/" + id + "/tracker/";
         })
         .catch(error => {
+            conole.log(response);
             console.error('Error:', error);
             alert("User not found");
         });
