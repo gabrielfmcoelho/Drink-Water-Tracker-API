@@ -14,7 +14,7 @@
     <p>ID: {{ user.id }}</p>
     <div>
       <div class="container">
-        <h2>Today's {{ date }} Water Intake</h2>
+        <h2>{{ date }} Water Intake</h2>
         <form id='tracker_form'>
           <fieldset>
             <legend>Register consume</legend>
@@ -84,7 +84,7 @@
           cupsize: cupsize,
       };
 
-      fetch('/user/{{ user.id }}/tracker/{{ entry.date }}', {
+      fetch('https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/{{ user.id }}/tracker/{{ entry.date }}', {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
@@ -106,7 +106,7 @@
       $('#seeHistory').click(function(event) {
         event.preventDefault();
         $.ajax({
-          url: '/app/{{ user.id }}/history',
+          url: 'https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/{{ user.id }}/history',
           type: 'GET',
           success: function(response) {
             console.log('Success:', data);
