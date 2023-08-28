@@ -93,13 +93,11 @@
       })
       .then(response => response.json())
       .then(data => {
-          console.log(data); // Handle response data
-          window.location.href = "https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/{{ user.id }}/tracker/{{ entry.date }}";
-          // Optionally, redirect or show a success message
+          console.log('Success:', data);
+          window.location.href = "/app/{{ user.id }}/tracker/{{ entry.date }}";
       })
       .catch(error => {
           console.error('Error:', error);
-          // Handle error, show an error message, etc.
       });
   });
   </script>
@@ -111,8 +109,8 @@
           url: '/app/{{ user.id }}/history',
           type: 'GET',
           success: function(response) {
-            console.log(response);
-            window.location.href = 'https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/{{ user.id }}/history';
+            console.log('Success:', data);
+            window.location.href = '/app/{{ user.id }}/history';
           },
           error: function(error) {
             console.log(error);

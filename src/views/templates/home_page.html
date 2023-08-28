@@ -51,7 +51,7 @@
             weight: weight
         };
 
-        fetch('https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/', {
+        fetch('/user/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,7 +62,7 @@
         .then(data => {
             console.log(data); // Handle response data
             console.log(data.id);
-            window.location.href = "https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/" + data.id + "/tracker/";
+            window.location.href = "/app/" + data.id + "/tracker/";
             // Optionally, redirect or show a success message
         })
         .catch(error => {
@@ -78,13 +78,13 @@
         const id = document.getElementById('ID').value;
         console.log(id);
 
-        fetch("https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/"+id+"/", {
+        fetch("/user/"+id+"/", {
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             console.log(data); // Handle response data
-            window.location.href = "https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/" + id + "/tracker/";
+            window.location.href = "/app/" + id + "/tracker/";
         })
         .catch(error => {
             conole.log(response);

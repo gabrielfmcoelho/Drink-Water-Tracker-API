@@ -1,5 +1,6 @@
 from fastapi import FastAPI, Form
 from fastapi.middleware.wsgi import WSGIMiddleware
+from fastapi.middleware.cors import CORSMiddleware
 from src.controllers import user_controller, water_tracker_controller
 from fastapi.openapi.utils import get_openapi
 from src.app import frontend_app
@@ -8,6 +9,13 @@ import uvicorn
 api = FastAPI()
 
 api.mount("/app", WSGIMiddleware(frontend_app))
+
+api.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 @api.get("/")
 def hello_world():
