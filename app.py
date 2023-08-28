@@ -8,14 +8,25 @@ import uvicorn
 
 api = FastAPI()
 
-api.mount("/app", WSGIMiddleware(frontend_app))
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+    "https://localhost",
+    "https://localhost:8000",
+    "https://drink-water-tracker-kvgl74sgpa-rj.a.run.app",
+    "https://drink-water-tracker-kvgl74sgpa-rj.a.run.app:8000",
+    "http://drink-water-tracker-kvgl74sgpa-rj.a.run.app"
+]
 
 api.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+api.mount("/app", WSGIMiddleware(frontend_app))
 
 @api.get("/")
 def hello_world():

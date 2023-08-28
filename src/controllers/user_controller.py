@@ -1,11 +1,13 @@
 from fastapi import APIRouter
 from src.models.user import User, CreateUser
 from database.schemas.user_schema import UserSchema
+from fastapi.middleware.cors import CORSMiddleware
 from database.database import users_collection
 from typing import List
 
 router = APIRouter()
 schema = UserSchema()
+
 
 @router.post("/user/", response_model=User, tags=["user"])
 async def create_user(user: CreateUser):

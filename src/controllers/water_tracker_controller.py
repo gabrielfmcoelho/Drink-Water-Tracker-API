@@ -1,6 +1,7 @@
 from fastapi import APIRouter
 from src.models.water_tracker import WaterTracker, CreateWaterTracker
 from database.schemas.water_tracker_schema import WaterTrackerSchema
+from fastapi.middleware.cors import CORSMiddleware
 from datetime import date
 from typing import List
 
