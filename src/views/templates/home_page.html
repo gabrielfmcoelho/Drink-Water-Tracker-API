@@ -78,13 +78,13 @@
         const id = document.getElementById('ID').value;
         console.log(id);
 
-        fetch("/user/"+id+"/", {
+        fetch("https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/"+id+"/", {
             method: 'GET',
         })
         .then(response => response.json())
         .then(data => {
             console.log(data); // Handle response data
-            window.location.href = "http://127.0.0.1:8000/app/" + id + "/tracker/";
+            window.location.href = "https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/" + id + "/tracker/";
         })
         .catch(error => {
             conole.log(response);
