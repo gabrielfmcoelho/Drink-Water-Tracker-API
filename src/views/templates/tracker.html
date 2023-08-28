@@ -84,7 +84,7 @@
           cupsize: cupsize,
       };
 
-      fetch('https://localhost:8000/user/{{ user.id }}/tracker/{{ entry.date }}', {
+      fetch('http://localhost:8000/user/{{ user.id }}/tracker/{{ entry.date }}', {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
@@ -106,7 +106,7 @@
       $('#seeHistory').click(function(event) {
         event.preventDefault();
         $.ajax({
-          url: 'https://localhost/app/{{ user.id }}/history',
+          url: 'http://localhost/app/{{ user.id }}/history',
           type: 'GET',
           success: function(response) {
             console.log('Success:', data);
