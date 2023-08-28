@@ -12,7 +12,7 @@ page_blueprint = Blueprint('page', __name__)
 
 def get_user_from_api(user_id):
     try:
-        user_response = requests.get(f"https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/{user_id}/")
+        user_response = requests.get(f"https://localhost:8000/user/{user_id}/")
         return user_response.json()
     except Exception as e:
         print(e)
@@ -22,9 +22,9 @@ def get_tracker_from_api(user_id, tracker_date=None):
     try:
         if tracker_date is None:
             tracker_date = date.today().strftime("%Y-%m-%d")
-            tracker_response = requests.get(f"https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/{user_id}/tracker/")
+            tracker_response = requests.get(f"https://localhost:8000/user/{user_id}/tracker/")
         else:
-            tracker_response = requests.get(f"https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/{user_id}/tracker/{tracker_date}/")
+            tracker_response = requests.get(f"https://localhost:8000/user/{user_id}/tracker/{tracker_date}/")
         return tracker_response.json()
     except Exception as e:
         print(e)
@@ -32,7 +32,7 @@ def get_tracker_from_api(user_id, tracker_date=None):
 
 def get_history_from_api(user_id):
     try:
-        history_response = requests.get(f"https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/{user_id}/history/")
+        history_response = requests.get(f"https://localhost:8000/user/{user_id}/history/")
         return history_response.json()
     except Exception as e:
         print(e)
