@@ -84,7 +84,7 @@
           cupsize: cupsize,
       };
 
-      fetch('http://127.0.0.1:8000/user/{{ user.id }}/tracker/{{ entry.date }}', {
+      fetch('https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/user/{{ user.id }}/tracker/{{ entry.date }}', {
           method: 'PUT',
           headers: {
               'Content-Type': 'application/json'
@@ -108,7 +108,7 @@
       $('#seeHistory').click(function(event) {
         event.preventDefault();
         $.ajax({
-          url: 'http://127.0.0.1:8000/app/{{ user.id }}/history',
+          url: 'https://drink-water-tracker-kvgl74sgpa-rj.a.run.app/app/{{ user.id }}/history',
           type: 'GET',
           success: function(response) {
             console.log(response);
