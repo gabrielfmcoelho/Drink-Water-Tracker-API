@@ -62,7 +62,7 @@ def user_tracker_page(user_id, tracker_date=None):
         print(e)
         return render_template("error.html", message="Error connecting to API")
     
-    return render_template("tracker.html", user=user, date=tracker.date, entry=tracker)
+    return render_template("tracker.html", user=user, date=tracker['date'], entry=tracker)
 
 @page_blueprint.route("/<user_id>/tracker/")
 def _(user_id):
